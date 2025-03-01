@@ -7,9 +7,9 @@ interface SideBarProps {
 const Sidebar: React.FC<SideBarProps> = ({ sidebarOptions, selectedOption, onSelect }) => {
   return (
     <div className="mt-12">
-      {sidebarOptions.map((option) => (
+      {sidebarOptions.map((option, index) => (
         <div
-          key={option}
+          key={`${option}-${index}`}
           className={`p-2 rounded-md cursor-pointer ${selectedOption === option ? "bg-gray-200 text-black" : "bg-white text-black"} hover:bg-gray-100`}
           onClick={() => onSelect(option)}
         >

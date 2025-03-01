@@ -1,25 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Avatar } from "antd"
 import Sidebar from "../../components/Sidebar";
 import { useState } from "react";
 import { useUser } from "../../context/UserContext";
 import Navbar from "../../components/Navbar";
 import ProfileSidebar from "../../components/ProfileSidebar";
-
-
-const sidebarOptions = [
-  "Dashboard",
-  "Passwords",
-  "Documents",
-  "Cards & Bank Accounts",
-  "Secure Notes",
-  "Subscriptions",
-  "Settings"
-]
+import { SIDEBAR_OPTIONS } from "../../constants/sidebar";
 
 const HomePage = () => {
+  const [selected, setSelected] = useState(SIDEBAR_OPTIONS[0]); 
   const { user } = useUser();
-  const [selected, setSelected] = useState(sidebarOptions[0]); 
 
   return (
     <div className="flex w-screen h-screen">
@@ -30,7 +19,7 @@ const HomePage = () => {
             <h1>Lock Box</h1>
           </div>
 
-          <Sidebar sidebarOptions={sidebarOptions} selectedOption={selected} onSelect={setSelected} />
+          <Sidebar sidebarOptions={SIDEBAR_OPTIONS} selectedOption={selected} onSelect={setSelected} />
 
         </div>
         

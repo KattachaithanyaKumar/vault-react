@@ -1,4 +1,4 @@
-const sidebarOptions = [
+export const SIDEBAR_OPTIONS = [
   "Dashboard",
   "Passwords",
   "Documents",
@@ -6,6 +6,4 @@ const sidebarOptions = [
   "Secure Notes",
   "Subscriptions",
   "Settings"
-]
-
-export default sidebarOptions;
+];

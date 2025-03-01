@@ -1,9 +1,10 @@
-import { Avatar, Button, Divider, Input, Modal } from 'antd'
+import { Button, Divider, Input, Modal } from 'antd'
 import { User } from '../../types/User.type'
 import { useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../../context/UserContext';
+import ProfilePicture from '../ProfilePicture';
 
 interface ProfileProps {
   user: User;
@@ -35,7 +36,7 @@ const ProfileSidebar = ({ user } : ProfileProps) => {
   return (
     <>
       <div className="flex gap-2 items-center p-6 cursor-pointer hover:bg-gray-400" onClick={toggleModal}>
-        <Avatar src={user?.avatar} alt="Profile Picture" />
+        <ProfilePicture size={"large"} />
         <p>{user?.name}</p>
       </div>
 
@@ -63,7 +64,7 @@ const ProfileSidebar = ({ user } : ProfileProps) => {
       >
         <div className=''>
           <div>
-            <Avatar size={84} src={user?.avatar} alt="Profile Picture" />
+            <ProfilePicture size={84} />
             <h3 className='mt-2'>{user?.name}</h3>
             <p className='font-thin'>{user.email}</p>
           </div>
