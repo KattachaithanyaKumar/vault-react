@@ -3,8 +3,10 @@ import { Avatar } from "antd"
 import Sidebar from "../../components/Sidebar";
 import { useState } from "react";
 import { useUser } from "../../context/UserContext";
+import Navbar from "../../components/Navbar";
+import ProfileSidebar from "../../components/ProfileSidebar";
 
-const ColorList = ['#f56a00', '#7265e6', '#ffbf00', '#00a2ae'];
+
 const sidebarOptions = [
   "Dashboard",
   "Passwords",
@@ -15,10 +17,6 @@ const sidebarOptions = [
   "Settings"
 ]
 
-const getRandomColor = () => {
-  return ColorList[Math.floor(Math.random() * ColorList.length)];
-}
-
 const HomePage = () => {
   const { user } = useUser();
   const [selected, setSelected] = useState(sidebarOptions[0]); 
@@ -26,20 +24,22 @@ const HomePage = () => {
   return (
     <div className="flex w-screen h-screen">
       {/* sidebar */}
-      <div className="w-100 bg-white p-6 shadow-lg">
-        <div className="flex justify-center items-center">
-          {/* <img src={logo} alt="logo"  /> */}
-          <h1>Lock Box</h1>
-        </div>
+      <div className="w-100 bg-white shadow-lg flex flex-col justify-between">
+        <div className="p-6">
+          <div className="flex justify-center items-center">
+            <h1>Lock Box</h1>
+          </div>
 
-        <Sidebar sidebarOptions={sidebarOptions} selectedOption={selected} onSelect={setSelected} />
+          <Sidebar sidebarOptions={sidebarOptions} selectedOption={selected} onSelect={setSelected} />
+
+        </div>
+        
+        {user && <ProfileSidebar user={user} />}
       </div>  
       
       {/* main board */}
-      <div className="w-full bg-gray-200 p-6">
-        <Avatar size="large" style={{ backgroundColor: getRandomColor() }}>
-          <h3>{user?.name[0]}</h3>
-        </Avatar>
+      <div className="w-full bg-gray-200 ">
+        <Navbar />
       </div>
     </div>
   )

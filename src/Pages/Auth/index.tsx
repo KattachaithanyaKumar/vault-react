@@ -1,20 +1,111 @@
-import { Button, Input } from "antd";
+import { Button, Divider, Input } from "antd";
 import logo from "../../assets/LB.png";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { FcGoogle } from "react-icons/fc";
+import { supabase } from "../../lib/supabase";
+import { useUser } from "../../context/UserContext";
 
 const AuthPage = () => {
+  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const { setUser } = useUser();
 
   const navigate = useNavigate();
 
-  const handleLogin = () => {
+  useEffect(() => {
+    const fetchUser = async () => {
+      const { data, error } = await supabase.auth.getUser();
+
+      console.log(data);
+      
+      
+      if (error) {
+        console.error("Error fetching user:", error);
+        return;
+      }
+  
+      if (data?.user) {
+        setUser({
+          id: data.user.id,
+          name: data.user.user_metadata?.full_name || data.user.email,
+          email: data.user.email || "",
+          avatar: data.user.user_metadata?.avatar_url || ""
+        });
+        navigate("/home")
+      }
+    };
+  
+    fetchUser();
+  }, [navigate, setUser]);
+  
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
     toast("Logging in...")
-    navigate("/home")
-    toast.success("Logged in!")
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password
+    })
+
+    console.log(data);
+    
+
+    setLoading(false)
+
+    if (error) {
+      toast.error(error.message)
+      console.error(error);
+    } else {
+      toast.success("Logged in!")
+      // setUser(data.user)
+      navigate("/home")
+    }
   }
 
-  const handleSignup = () => {
+  const handleSignup = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    toast("Singing up...")
 
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password
+    })
+
+    console.log(data);
+    
+    setLoading(false);
+
+    if (error) {
+      toast.error(error.message)
+      console.error(error)
+    } else {
+      toast.success("Signup success!")
+      // setUser(data.user)
+    }
+  }
+
+  const handleSignInWithGoogle = async () => {
+    setLoading(true);
+
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+    })
+
+    setLoading(false)
+    if (error) {
+      toast.error(error.message)
+      console.error(error)
+    } else {
+      toast.success("Logged In!")
+      // navigate("/home")
+    }
   }
 
   return (
@@ -33,12 +124,41 @@ const AuthPage = () => {
           <h1 className="text-xl font-semibold">Lock Box</h1>
         </div>
 
-        <form action="" className="flex flex-col gap-3 mt-4">
-          <Input size="large" placeholder="Username" />
-          <Input size="large" type="password" placeholder="Password" />
+        <form onSubmit={handleLogin} className="flex flex-col gap-3 mt-4">
+          <Input 
+            size="large" 
+            placeholder="Email" 
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+          />
+          <Input 
+            size="large" 
+            type="password" 
+            placeholder="Password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+          />
 
-          <Button type="primary" size="large" className="w-full" onClick={handleLogin}>Login</Button>
-          <Button className="w-full" onClick={handleSignup}>Signup</Button>
+          <Button 
+            type="primary" 
+            size="large" 
+            className="w-full" 
+            onClick={handleLogin}
+            loading={loading}
+          >
+              Login
+          </Button>
+          <Button 
+            className="w-full" 
+            onClick={handleSignup}
+            loading={loading}
+          >
+            Signup
+          </Button>
+
+          <Divider variant="solid" style={{margin: "0px"}} />
+
+          <Button onClick={handleSignInWithGoogle} loading={loading}><FcGoogle /> Login using Google</Button>
         </form>
       </div>
     </div>
