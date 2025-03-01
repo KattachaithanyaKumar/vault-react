@@ -5,7 +5,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { supabase } from "../../lib/supabase";
-import { useUser } from "../../context/UserContext";
+import { useUser } from "../../context/useUser";
 
 const AuthPage = () => {
   const [loading, setLoading] = useState(false);

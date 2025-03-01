@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import Sidebar from "../../components/Sidebar";
 import { useState } from "react";
-import { useUser } from "../../context/UserContext";
 import Navbar from "../../components/Navbar";
 import ProfileSidebar from "../../components/ProfileSidebar";
 import { SIDEBAR_OPTIONS } from "../../constants/sidebar";
+import MainBoard from "../../components/MainBoard";
+import { useUser } from "../../context/useUser";
 
 const HomePage = () => {
   const [selected, setSelected] = useState(SIDEBAR_OPTIONS[0]); 
@@ -29,6 +30,8 @@ const HomePage = () => {
       {/* main board */}
       <div className="w-full bg-gray-200 ">
         <Navbar />
+
+        <MainBoard selectedOption={selected} />
       </div>
     </div>
   )

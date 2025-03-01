@@ -1,5 +1,5 @@
 import { Avatar } from "antd";
-import { useUser } from "../../context/UserContext";
+import { useUser } from "../../context/useUser";
 
 const ColorList = ['#f56a00', '#7265e6', '#ffbf00', '#00a2ae'];
 const getRandomColor = () => {
@@ -13,7 +13,11 @@ const ProfilePicture = ({...props}) => {
         <Avatar {...props} src={user.avatar} />
       ) : (
         <Avatar {...props} style={{ backgroundColor: getRandomColor() }}>
-          <h1>{user?.name[0]}</h1>
+          {props.size == "84" ? (
+            <h1>{user?.name[0]}</h1>
+          ) : (
+            <h3>{user?.name[0]}</h3>
+          )}
         </Avatar>
       )}
     </>

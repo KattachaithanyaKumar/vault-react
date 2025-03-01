@@ -3,8 +3,8 @@ import { User } from '../../types/User.type'
 import { useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import { useNavigate } from 'react-router-dom';
-import { useUser } from '../../context/UserContext';
 import ProfilePicture from '../ProfilePicture';
+import { useUser } from '../../context/useUser';
 
 interface ProfileProps {
   user: User;

@@ -5,7 +5,7 @@ import { ReactNode } from "react";
 import AuthPage from "./Pages/Auth";
 import HomePage from "./Pages/Home";
 import { ConfigProvider } from "antd";
-import { useUser } from "./context/UserContext";
+import { useUser } from "./context/useUser";
 
 const ProtectedRoute = ({ children }: { children: ReactNode }) => {
   const { user, loadingUser } = useUser();

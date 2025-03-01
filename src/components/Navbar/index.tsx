@@ -2,7 +2,7 @@ import { IoMdNotificationsOutline } from "react-icons/io"
 
 const Navbar = () => {
   return (
-    <div className="p-6 flex justify-between items-center">
+    <div className="p-6 flex bg-white justify-between items-center">
       <div className="flex gap-2 ">
         
       </div>
