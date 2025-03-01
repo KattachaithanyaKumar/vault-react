@@ -2,6 +2,7 @@
 import { Avatar } from "antd"
 import Sidebar from "../../components/Sidebar";
 import { useState } from "react";
+import { useUser } from "../../context/UserContext";
 
 const ColorList = ['#f56a00', '#7265e6', '#ffbf00', '#00a2ae'];
 const sidebarOptions = [
@@ -19,25 +20,25 @@ const getRandomColor = () => {
 }
 
 const HomePage = () => {
-  const username = "Chaithanya";
+  const { user } = useUser();
   const [selected, setSelected] = useState(sidebarOptions[0]); 
 
   return (
     <div className="flex w-screen h-screen">
       {/* sidebar */}
-      <div className="w-100 bg-white p-6">
+      <div className="w-100 bg-white p-6 shadow-lg">
         <div className="flex justify-center items-center">
           {/* <img src={logo} alt="logo"  /> */}
           <h1>Lock Box</h1>
         </div>
 
-        <Sidebar sidebarOptions={sidebarOptions} selectedOption={selected} />
+        <Sidebar sidebarOptions={sidebarOptions} selectedOption={selected} onSelect={setSelected} />
       </div>  
       
       {/* main board */}
       <div className="w-full bg-gray-200 p-6">
         <Avatar size="large" style={{ backgroundColor: getRandomColor() }}>
-          <h3>{username[0]}</h3>
+          <h3>{user?.name[0]}</h3>
         </Avatar>
       </div>
     </div>
